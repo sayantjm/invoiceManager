@@ -1,7 +1,10 @@
 package restapi.invoice.invoiceManager.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import restapi.invoice.invoiceManager.dto.ClientDTO;
 
 import javax.persistence.*;
 
@@ -9,17 +12,45 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name="CLIENT")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Client {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    Long id;
+    private Long id;
 
-    String name;
-    String cif;
-    String address;
-    Integer codPostal;
-    String city;
-    String state;
-    String phoneNumber;
-    String mobil;
+    private String name;
+    private String cif;
+    private String address;
+    private Integer codPostal;
+    private String city;
+    private String state;
+    private String phoneNumber;
+    private String mobil;
+
+    public ClientDTO toDto() {
+        return ClientDTO.builder()
+                .id(this.id)
+                .name(this.name)
+                .cif(this.cif)
+                .address(this.address)
+                .codPostal(this.codPostal)
+                .city(this.city)
+                .state(this.state)
+                .phoneNumber(this.phoneNumber)
+                .mobil(this.mobil)
+                .build();
+    }
+
+    public void fromDto(ClientDTO clientDTO) {
+        this.id = clientDTO.getId();
+        this.name = clientDTO.getName();
+        this.cif = clientDTO.getCif();
+        this.address = clientDTO.getAddress();
+        this.codPostal = clientDTO.getCodPostal();
+        this.city = clientDTO.getCity();
+        this.state = clientDTO.getState();
+        this.phoneNumber = clientDTO.getPhoneNumber();
+        this.mobil = clientDTO.getMobil();
+    }
 }
